@@ -63,7 +63,7 @@ export function KaeseFinder() {
           </Reveal>
         </div>
 
-        <div className="sticky top-16 z-30 -mx-4 mt-12 overflow-x-auto bg-background/90 px-4 py-3 backdrop-blur sm:mx-0 sm:rounded-full sm:px-2">
+        <div className="sticky top-16 z-30 sm:top-20 -mx-4 mt-12 overflow-x-auto bg-background/90 px-4 py-3 backdrop-blur sm:mx-0 sm:rounded-full sm:px-2">
           <ToggleGroup
             type="single"
             value={filter}

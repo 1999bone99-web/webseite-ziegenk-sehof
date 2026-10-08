@@ -46,7 +46,7 @@ export function Termine() {
             </div>
           )}
 
-          {vergangen.length > 0 && (
+          {vergangen.length > 0 && kommend.length > 0 && (
             <details className="group mt-8">
               <summary className="cursor-pointer text-sm text-muted-foreground hover:text-foreground">
                 Rückblick: {vergangen.length} vergangene Termine
@@ -58,6 +58,8 @@ export function Termine() {
           )}
         </Reveal>
       </div>
+
+      {vergangen.length > 0 && kommend.length === 0 && <Rueckblick liste={vergangen} />}
     </section>
   )
 }
@@ -97,5 +99,41 @@ function TerminListe({ liste }: { liste: Termin[] }) {
         )
       })}
     </Accordion>
+  )
+}
+
+function Rueckblick({ liste }: { liste: Termin[] }) {
+  const jahr = liste[0].datum.slice(0, 4)
+  return (
+    <div className="mx-auto mt-16 max-w-6xl px-4 sm:px-6">
+      <Reveal>
+        <div className="flex items-baseline justify-between gap-4">
+          <h3 className="text-3xl font-medium">So war {jahr}</h3>
+          <p className="text-sm text-muted-foreground">Damit Sie wissen, was Sie erwartet</p>
+        </div>
+      </Reveal>
+      <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {[...liste].reverse().map((t, i) => {
+          const d = new Date(`${t.datum}T12:00:00`)
+          return (
+            <li key={t.datum + t.titel}>
+              <Reveal delay={i * 0.05} className="flex h-full flex-col rounded-2xl border bg-background p-6">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-sm text-muted-foreground">
+                    {format(d, "EEEE, d. MMMM", { locale: de })}
+                  </span>
+                  <Badge variant="outline" className="font-normal text-muted-foreground">
+                    vorbei
+                  </Badge>
+                </div>
+                <h4 className="mt-3 font-serif text-xl font-medium">{t.titel}</h4>
+                {t.text && <p className="mt-2 flex-1 text-muted-foreground">{t.text}</p>}
+                {t.preis && <p className="mt-4 text-sm text-muted-foreground">{t.preis}</p>}
+              </Reveal>
+            </li>
+          )
+        })}
+      </ul>
+    </div>
   )
 }

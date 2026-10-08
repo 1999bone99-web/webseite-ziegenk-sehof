@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
 import { motion, useMotionValueEvent, useScroll } from "motion/react"
@@ -32,10 +33,9 @@ export function SiteHeader() {
         scrolled ? "border-b bg-background/85 shadow-sm backdrop-blur-md" : "border-b border-transparent"
       )}
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-        <Link href="#top" className="group flex items-baseline gap-1.5 font-serif text-lg leading-none">
-          <span className="text-muted-foreground transition-colors group-hover:text-foreground">Nußlocher</span>
-          <span className="font-semibold">Ziegenkäsehof</span>
+      <div className="mx-auto flex h-16 max-w-6xl items-center sm:h-20 justify-between gap-4 px-4 sm:px-6">
+        <Link href="#top" className="shrink-0" aria-label="Nußlocher Ziegenkäsehof, zum Seitenanfang">
+          <Image src="/logo.svg" alt="Nußlocher Ziegenkäsehof" width={278} height={98} priority unoptimized className="h-11 w-auto sm:h-14" />
         </Link>
 
         <nav aria-label="Hauptnavigation" className="hidden items-center gap-1 lg:flex">
@@ -56,7 +56,9 @@ export function SiteHeader() {
             </SheetTrigger>
             <SheetContent side="right" className="w-[85vw] max-w-sm bg-background">
               <SheetHeader>
-                <SheetTitle className="font-serif text-xl">{hof.name}</SheetTitle>
+                <SheetTitle>
+                  <Image src="/logo.svg" alt={hof.name} width={278} height={98} unoptimized className="h-14 w-auto" />
+                </SheetTitle>
               </SheetHeader>
               <nav aria-label="Mobile Navigation" className="flex flex-col px-4">
                 {links.map((l) => (
