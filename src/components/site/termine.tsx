@@ -1,0 +1,150 @@
+"use client"
+
+import { format } from "date-fns"
+import { de } from "date-fns/locale"
+import Link from "next/link"
+import { ArrowRight, CalendarDays, Phone } from "lucide-react"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Reveal } from "@/components/site/reveal"
+import { useNusslochZeit } from "@/hooks/use-nussloch-zeit"
+import { hof, termine, type Termin } from "@/lib/data"
+
+export function Termine({ kurz = false }: { kurz?: boolean }) {
+  const now = useNusslochZeit()
+  const heute = now ? format(now, "yyyy-MM-dd") : null
+  const kommend = heute ? termine.filter((t) => t.datum >= heute) : termine
+  const vergangen = heute ? termine.filter((t) => t.datum < heute).reverse() : []
+  const Titel = kurz ? "h2" : "h1"
+
+  return (
+    <section id="termine" className="border-t bg-card py-24 sm:py-32">
+      <div className="mx-auto grid max-w-6xl gap-12 px-4 sm:px-6 lg:grid-cols-[1fr_1.4fr]">
+        <Reveal>
+          <p className="mb-3 text-sm font-medium tracking-widest text-terra uppercase">Termine</p>
+          <Titel className="text-4xl font-medium tracking-tight text-balance sm:text-5xl">Auf den Hof kommen</Titel>
+          <p className="mt-5 text-lg text-muted-foreground">
+            Führungen durch den Stall, Käseverkostungen, Kochkurse und unser Stand auf den Naturparkmärkten.
+          </p>
+        </Reveal>
+
+        <Reveal delay={0.1}>
+          {kommend.length > 0 ? (
+            <TerminListe liste={kurz ? kommend.slice(0, 3) : kommend} />
+          ) : (
+            <div className="rounded-2xl border border-dashed bg-background p-8">
+              <CalendarDays className="size-8 text-primary" />
+              <h3 className="mt-4 text-2xl font-medium">Neue Termine folgen</h3>
+              <p className="mt-2 text-muted-foreground">
+                Für dieses Jahr sind alle Veranstaltungen vorbei. Fragen Sie gern telefonisch nach, was als
+                Nächstes geplant ist.
+              </p>
+              <Button asChild variant="outline" className="mt-5 rounded-full">
+                <a href={hof.telefonHref}>
+                  <Phone /> {hof.telefon}
+                </a>
+              </Button>
+            </div>
+          )}
+
+          {kurz && (
+            <Button asChild variant="link" className="mt-6 px-0 text-base">
+              <Link href="/termine">
+                {kommend.length > 0 ? "Alle Termine" : `Rückblick: ${vergangen.length || ""} vergangene Veranstaltungen`}{" "}
+                <ArrowRight />
+              </Link>
+            </Button>
+          )}
+
+          {!kurz && vergangen.length > 0 && kommend.length > 0 && (
+            <details className="group mt-8">
+              <summary className="cursor-pointer text-sm text-muted-foreground hover:text-foreground">
+                Rückblick: {vergangen.length} vergangene Termine
+              </summary>
+              <div className="mt-4 opacity-70">
+                <TerminListe liste={vergangen} />
+              </div>
+            </details>
+          )}
+        </Reveal>
+      </div>
+
+      {!kurz && vergangen.length > 0 && kommend.length === 0 && <Rueckblick liste={vergangen} />}
+    </section>
+  )
+}
+
+function TerminListe({ liste }: { liste: Termin[] }) {
+  return (
+    <Accordion type="single" collapsible className="flex flex-col gap-3">
+      {liste.map((t) => {
+        const d = new Date(`${t.datum}T12:00:00`)
+        return (
+          <AccordionItem key={t.datum + t.titel} value={t.datum + t.titel} className="rounded-2xl border bg-background px-5 last:border-b">
+            <AccordionTrigger className="items-center gap-4 py-4 hover:no-underline">
+              <div className="flex items-center gap-4 text-left">
+                <div className="flex w-14 shrink-0 flex-col items-center rounded-xl bg-secondary py-1.5">
+                  <span className="text-xs text-muted-foreground uppercase">{format(d, "MMM", { locale: de })}</span>
+                  <span className="font-serif text-2xl leading-none font-medium">{format(d, "d")}</span>
+                </div>
+                <div>
+                  <p className="font-serif text-lg font-medium">{t.titel}</p>
+                  <p className="text-sm font-normal text-muted-foreground">
+                    {format(d, "EEEE", { locale: de })}
+                    {t.zeit && ` · ${t.zeit}`}
+                  </p>
+                </div>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="pl-[4.5rem] text-base text-muted-foreground">
+              {t.ort && <p className="mb-1 font-medium text-foreground">{t.ort}</p>}
+              {t.text && <p>{t.text}</p>}
+              {t.preis && (
+                <Badge variant="secondary" className="mt-3">
+                  {t.preis}
+                </Badge>
+              )}
+            </AccordionContent>
+          </AccordionItem>
+        )
+      })}
+    </Accordion>
+  )
+}
+
+function Rueckblick({ liste }: { liste: Termin[] }) {
+  const jahr = liste[0].datum.slice(0, 4)
+  return (
+    <div className="mx-auto mt-16 max-w-6xl px-4 sm:px-6">
+      <Reveal>
+        <div className="flex items-baseline justify-between gap-4">
+          <h3 className="text-3xl font-medium">So war {jahr}</h3>
+          <p className="text-sm text-muted-foreground">Damit Sie wissen, was Sie erwartet</p>
+        </div>
+      </Reveal>
+      <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {[...liste].reverse().map((t, i) => {
+          const d = new Date(`${t.datum}T12:00:00`)
+          return (
+            <li key={t.datum + t.titel}>
+              <Reveal delay={i * 0.05} className="flex h-full flex-col rounded-2xl border bg-background p-6">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-sm text-muted-foreground">
+                    {format(d, "EEEE, d. MMMM", { locale: de })}
+                  </span>
+                  <Badge variant="outline" className="font-normal text-muted-foreground">
+                    vorbei
+                  </Badge>
+                </div>
+                <h4 className="mt-3 font-serif text-xl font-medium">{t.titel}</h4>
+                {t.text && <p className="mt-2 flex-1 text-muted-foreground">{t.text}</p>}
+                {t.preis && <p className="mt-4 text-sm text-muted-foreground">{t.preis}</p>}
+              </Reveal>
+            </li>
+          )
+        })}
+      </ul>
+    </div>
+  )
+}
