@@ -114,13 +114,22 @@ export const werte = [
   "Gentechnikfreie Fütterung",
 ]
 
-export const auszeichnungen = [
-  "Stern auf dem Platz des guten Geschmacks (2010)",
-  "Empfohlen vom Gault Millau",
-  "Feinschmecker-Urkunde 2011",
-  "Zertifizierter Aussteller der Slow-Food-Messe",
-  "Partnerbetrieb des Naturparks Neckartal-Odenwald",
+// Die PDFs liegen in public/dokumente, damit die Links nach dem Umzug der Domain weiter funktionieren.
+export const auszeichnungen: { titel: string; pdf?: string }[] = [
+  { titel: "Stern auf dem Platz des guten Geschmacks (2010)" },
+  { titel: "Empfohlen vom Gault Millau", pdf: "/dokumente/gault-millau-empfehlung.pdf" },
+  { titel: "Feinschmecker-Urkunde 2011", pdf: "/dokumente/feinschmecker-urkunde-2011.pdf" },
+  {
+    titel: "Zertifizierter Aussteller der Slow-Food-Messe 2009",
+    pdf: "/dokumente/slow-food-zertifizierter-aussteller-2009.pdf",
+  },
 ]
+
+export const partner = {
+  name: "Naturpark Neckartal-Odenwald",
+  url: "https://www.naturpark-neckartal-odenwald.de",
+  logo: "/images/naturpark-neckartal-odenwald-partner.png",
+}
 
 export type Termin = {
   datum: string // ISO, für die Sortierung nach kommend/vergangen

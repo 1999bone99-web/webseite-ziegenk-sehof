@@ -3,10 +3,10 @@
 import Image from "next/image"
 import { useRef } from "react"
 import { motion, useScroll, useSpring } from "motion/react"
-import { Award, Leaf } from "lucide-react"
+import { Award, FileText, Leaf } from "lucide-react"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Reveal } from "@/components/site/reveal"
-import { auszeichnungen, meilensteine, mehrVomHof, werte } from "@/lib/data"
+import { auszeichnungen, meilensteine, mehrVomHof, partner, werte } from "@/lib/data"
 
 export function DerHof() {
   return (
@@ -69,11 +69,48 @@ export function DerHof() {
           </figure>
           <ul className="mt-12 flex flex-wrap justify-center gap-3">
             {auszeichnungen.map((a) => (
-              <li key={a} className="flex items-center gap-2 rounded-full border bg-card px-4 py-2 text-sm">
-                <Award className="size-4 text-terra" /> {a}
+              <li key={a.titel}>
+                {a.pdf ? (
+                  <a
+                    href={a.pdf}
+                    target="_blank"
+                    rel="noopener"
+                    className="group flex items-center gap-2 rounded-full border bg-card px-4 py-2 text-sm transition-colors hover:border-primary hover:bg-accent"
+                  >
+                    <Award className="size-4 text-terra" />
+                    <span className="underline decoration-border underline-offset-4 group-hover:decoration-primary">
+                      {a.titel}
+                    </span>
+                    <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                      <FileText className="size-3.5" /> PDF
+                    </span>
+                  </a>
+                ) : (
+                  <span className="flex items-center gap-2 rounded-full border bg-card px-4 py-2 text-sm">
+                    <Award className="size-4 text-terra" /> {a.titel}
+                  </span>
+                )}
               </li>
             ))}
           </ul>
+
+          <div className="mt-14 flex flex-col items-center gap-4">
+            <p className="text-sm text-muted-foreground">Der Nußlocher Ziegenkäsehof ist Partnerbetrieb von</p>
+            <a
+              href={partner.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-2xl transition-transform hover:-translate-y-0.5 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none"
+            >
+              <Image
+                src={partner.logo}
+                alt={`Partner ${partner.name}`}
+                width={178}
+                height={383}
+                className="h-40 w-auto"
+              />
+            </a>
+          </div>
         </Reveal>
 
         <MehrVomHof />
