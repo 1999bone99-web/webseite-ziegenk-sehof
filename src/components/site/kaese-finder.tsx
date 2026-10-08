@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import { useMemo, useState } from "react"
+import { useSearchParams } from "next/navigation"
 import { AnimatePresence, motion, useReducedMotion } from "motion/react"
 import { Check, Mail, Minus, Phone, Plus, X } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
@@ -24,7 +25,10 @@ type Filter = "alle" | KaeseKategorie
 const kategorieLabel = Object.fromEntries(kategorien.map((k) => [k.id, k.label])) as Record<KaeseKategorie, string>
 
 export function KaeseFinder() {
-  const [filter, setFilter] = useState<Filter>("alle")
+  const art = useSearchParams().get("art")
+  const [filter, setFilter] = useState<Filter>(
+    kategorien.some((k) => k.id === art) ? (art as KaeseKategorie) : "alle"
+  )
   const [auswahl, setAuswahl] = useState<string[]>([])
   const [sheetOffen, setSheetOffen] = useState(false)
   const reduce = useReducedMotion()
@@ -43,9 +47,9 @@ export function KaeseFinder() {
         <div className="grid items-end gap-10 lg:grid-cols-[1fr_auto]">
           <Reveal>
             <p className="mb-3 text-sm font-medium tracking-widest text-terra uppercase">Unser Käse</p>
-            <h2 className="max-w-2xl text-4xl font-medium tracking-tight text-balance sm:text-5xl">
+            <h1 className="max-w-2xl text-4xl font-medium tracking-tight text-balance sm:text-5xl">
               Von zart und frisch bis acht Wochen gereift
-            </h2>
+            </h1>
             <p className="mt-5 max-w-2xl text-lg text-muted-foreground">
               Alles aus der Milch unserer eigenen Ziegen. Stellen Sie sich nebenbei Ihre Käseplatte zusammen,
               wir bereiten sie vor und dekorieren sie gratis.

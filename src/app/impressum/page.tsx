@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { Rechtsseite } from "@/components/site/rechtsseite"
 import { hof } from "@/lib/data"
 
-export const metadata: Metadata = { title: "Impressum · Nußlocher Ziegenkäsehof" }
+export const metadata: Metadata = { title: "Impressum" }
 
 // Übernommen von www.ziegenkaesehof.de/impressum.html. Vor Livegang rechtlich prüfen lassen
 // (u. a. fehlt die Straße der ladungsfähigen Anschrift).

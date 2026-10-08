@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { Rechtsseite } from "@/components/site/rechtsseite"
 
-export const metadata: Metadata = { title: "Datenschutz · Nußlocher Ziegenkäsehof" }
+export const metadata: Metadata = { title: "Datenschutz" }
 
 // Platzhalter. Die Erklärung der alten Seite passt nicht mehr (sie bezieht sich u. a. auf das
 // eingebettete Facebook-Plugin). Vor Livegang durch eine geprüfte Erklärung ersetzen.

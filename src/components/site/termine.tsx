@@ -2,7 +2,8 @@
 
 import { format } from "date-fns"
 import { de } from "date-fns/locale"
-import { CalendarDays, Phone } from "lucide-react"
+import Link from "next/link"
+import { ArrowRight, CalendarDays, Phone } from "lucide-react"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -10,18 +11,19 @@ import { Reveal } from "@/components/site/reveal"
 import { useNusslochZeit } from "@/hooks/use-nussloch-zeit"
 import { hof, termine, type Termin } from "@/lib/data"
 
-export function Termine() {
+export function Termine({ kurz = false }: { kurz?: boolean }) {
   const now = useNusslochZeit()
   const heute = now ? format(now, "yyyy-MM-dd") : null
   const kommend = heute ? termine.filter((t) => t.datum >= heute) : termine
   const vergangen = heute ? termine.filter((t) => t.datum < heute).reverse() : []
+  const Titel = kurz ? "h2" : "h1"
 
   return (
     <section id="termine" className="border-t bg-card py-24 sm:py-32">
       <div className="mx-auto grid max-w-6xl gap-12 px-4 sm:px-6 lg:grid-cols-[1fr_1.4fr]">
         <Reveal>
           <p className="mb-3 text-sm font-medium tracking-widest text-terra uppercase">Termine</p>
-          <h2 className="text-4xl font-medium tracking-tight text-balance sm:text-5xl">Auf den Hof kommen</h2>
+          <Titel className="text-4xl font-medium tracking-tight text-balance sm:text-5xl">Auf den Hof kommen</Titel>
           <p className="mt-5 text-lg text-muted-foreground">
             Führungen durch den Stall, Käseverkostungen, Kochkurse und unser Stand auf den Naturparkmärkten.
           </p>
@@ -29,7 +31,7 @@ export function Termine() {
 
         <Reveal delay={0.1}>
           {kommend.length > 0 ? (
-            <TerminListe liste={kommend} />
+            <TerminListe liste={kurz ? kommend.slice(0, 3) : kommend} />
           ) : (
             <div className="rounded-2xl border border-dashed bg-background p-8">
               <CalendarDays className="size-8 text-primary" />
@@ -46,7 +48,16 @@ export function Termine() {
             </div>
           )}
 
-          {vergangen.length > 0 && kommend.length > 0 && (
+          {kurz && (
+            <Button asChild variant="link" className="mt-6 px-0 text-base">
+              <Link href="/termine">
+                {kommend.length > 0 ? "Alle Termine" : `Rückblick: ${vergangen.length || ""} vergangene Veranstaltungen`}{" "}
+                <ArrowRight />
+              </Link>
+            </Button>
+          )}
+
+          {!kurz && vergangen.length > 0 && kommend.length > 0 && (
             <details className="group mt-8">
               <summary className="cursor-pointer text-sm text-muted-foreground hover:text-foreground">
                 Rückblick: {vergangen.length} vergangene Termine
@@ -59,7 +70,7 @@ export function Termine() {
         </Reveal>
       </div>
 
-      {vergangen.length > 0 && kommend.length === 0 && <Rueckblick liste={vergangen} />}
+      {!kurz && vergangen.length > 0 && kommend.length === 0 && <Rueckblick liste={vergangen} />}
     </section>
   )
 }

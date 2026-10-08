@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image"
+import Link from "next/link"
 import { motion, useReducedMotion } from "motion/react"
 import { ArrowDown, MapPin } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -52,7 +53,7 @@ export function Hero() {
             className="mt-8 flex flex-wrap items-center gap-3"
           >
             <Button asChild size="lg" className="h-12 rounded-full px-6 text-base">
-              <a href="#kaese">Sortiment ansehen</a>
+              <Link href="/kaese">Sortiment ansehen</Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="h-12 rounded-full bg-transparent px-6 text-base">
               <a href="#wann-wo">Wann & wo kaufen?</a>

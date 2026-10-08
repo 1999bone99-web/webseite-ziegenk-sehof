@@ -1,23 +1,26 @@
 "use client"
 
 import Image from "next/image"
+import Link from "next/link"
 import { useRef } from "react"
 import { motion, useScroll, useSpring } from "motion/react"
-import { Award, FileText, Leaf } from "lucide-react"
+import { ArrowRight, Award, FileText, Leaf } from "lucide-react"
+import { Button } from "@/components/ui/button"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Reveal } from "@/components/site/reveal"
 import { auszeichnungen, meilensteine, mehrVomHof, partner, werte } from "@/lib/data"
 
-export function DerHof() {
+export function HofIntro({ kurz = false }: { kurz?: boolean }) {
+  const Titel = kurz ? "h2" : "h1"
   return (
     <section id="hof" className="overflow-x-clip py-24 sm:py-32">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
           <Reveal>
             <p className="mb-3 text-sm font-medium tracking-widest text-terra uppercase">Der Hof</p>
-            <h2 className="text-4xl font-medium tracking-tight text-balance sm:text-5xl">
+            <Titel className="text-4xl font-medium tracking-tight text-balance sm:text-5xl">
               Zwei Menschen, rund hundert Ziegen
-            </h2>
+            </Titel>
             <div className="mt-6 space-y-4 text-lg leading-relaxed text-muted-foreground">
               <p>
                 Seit 1985 bewirtschaften Stefanie Schott und Joachim Kamann den zehn Hektar großen Betrieb zu zweit.
@@ -34,6 +37,13 @@ export function DerHof() {
                 </li>
               ))}
             </ul>
+            {kurz && (
+              <Button asChild size="lg" className="mt-8 rounded-full">
+                <Link href="/hof">
+                  Geschichte, Auszeichnungen & mehr <ArrowRight />
+                </Link>
+              </Button>
+            )}
           </Reveal>
 
           <Reveal delay={0.1} className="relative">
@@ -56,6 +66,15 @@ export function DerHof() {
           </Reveal>
         </div>
 
+      </div>
+    </section>
+  )
+}
+
+export function HofDetails() {
+  return (
+    <section className="overflow-x-clip pb-24 sm:pb-32">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <Zeitleiste />
 
         <Reveal className="mt-24">
@@ -125,7 +144,7 @@ function Zeitleiste() {
   const scaleY = useSpring(scrollYProgress, { stiffness: 120, damping: 30 })
 
   return (
-    <div className="mt-36">
+    <div>
       <h3 className="text-center text-3xl font-medium">Stationen</h3>
       <ol ref={ref} className="relative mx-auto mt-12 max-w-2xl">
         <div className="absolute top-2 bottom-2 left-[4.5rem] w-px bg-border sm:left-1/2" aria-hidden />

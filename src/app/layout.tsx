@@ -1,10 +1,15 @@
 import type { Metadata, Viewport } from "next"
 import "./globals.css"
 import { TooltipProvider } from "@/components/ui/tooltip"
+import { SiteHeader } from "@/components/site/site-header"
+import { Footer } from "@/components/site/kontakt"
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.ziegenkaesehof.de"),
-  title: "Nußlocher Ziegenkäsehof · Ziegenkäse aus eigener Hofkäserei",
+  title: {
+    default: "Nußlocher Ziegenkäsehof · Ziegenkäse aus eigener Hofkäserei",
+    template: "%s · Nußlocher Ziegenkäsehof",
+  },
   description:
     "Frischkäse, Camembert, Hartkäse und mehr aus der Milch unserer rund 100 Ziegen. Hofladen in Nußloch und Wochenmärkte in Mannheim, Wiesloch und Heidelberg-Neuenheim.",
   openGraph: {
@@ -24,7 +29,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="de">
       <body>
-        <TooltipProvider delayDuration={200}>{children}</TooltipProvider>
+        <TooltipProvider delayDuration={200}>
+          <SiteHeader />
+          {children}
+          <Footer />
+        </TooltipProvider>
       </body>
     </html>
   )

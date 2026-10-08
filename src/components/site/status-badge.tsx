@@ -12,7 +12,7 @@ export function StatusBadge({ className, kurz = false }: { className?: string; k
 
   return (
     <Link
-      href="#wann-wo"
+      href="/#wann-wo"
       aria-live="polite"
       className={cn(
         "inline-flex items-center gap-2 rounded-full border bg-card/80 px-3 py-1.5 text-sm backdrop-blur transition-colors hover:bg-accent",

@@ -74,7 +74,7 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
   }
-  h1, h2, h3 {
+  h1, h2, h3, h4 {
     @apply font-serif;
     font-variation-settings: "SOFT" 60, "WONK" 0;
   }

@@ -1,26 +1,21 @@
-import { SiteHeader } from "@/components/site/site-header"
 import { Hero } from "@/components/site/hero"
 import { Zahlen } from "@/components/site/zahlen"
-import { KaeseFinder } from "@/components/site/kaese-finder"
+import { KaeseAuswahl } from "@/components/site/kaese-auswahl"
 import { WannWo } from "@/components/site/wann-wo"
-import { DerHof } from "@/components/site/der-hof"
+import { HofIntro } from "@/components/site/der-hof"
 import { Termine } from "@/components/site/termine"
-import { Footer, Kontakt } from "@/components/site/kontakt"
+import { Kontakt } from "@/components/site/kontakt"
 
 export default function Home() {
   return (
-    <>
-      <SiteHeader />
-      <main>
-        <Hero />
-        <Zahlen />
-        <KaeseFinder />
-        <WannWo />
-        <DerHof />
-        <Termine />
-        <Kontakt />
-      </main>
-      <Footer />
-    </>
+    <main>
+      <Hero />
+      <Zahlen />
+      <KaeseAuswahl />
+      <WannWo />
+      <HofIntro kurz />
+      <Termine kurz />
+      <Kontakt />
+    </main>
   )
 }

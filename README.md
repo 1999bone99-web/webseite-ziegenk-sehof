@@ -15,16 +15,16 @@ Alle Texte, Öffnungszeiten, Märkte, Käsesorten, Termine und Bezugsquellen ste
 
 ## Aufbau
 
-| Abschnitt | Datei | Interaktion |
-|---|---|---|
-| Kopfzeile | `site-header.tsx` | Live-Status Hofladen (Zeitzone Berlin), mobiles Menü (Sheet) |
-| Hero | `hero.tsx` | Foto-Collage mit Parallax, Laufband mit Käsesorten |
-| Zahlen | `zahlen.tsx` | Zähler laufen beim Hineinscrollen hoch |
-| Unser Käse | `kaese-finder.tsx` | Filter (ToggleGroup), Käseplatte zusammenstellen, Anfrage als vorausgefüllte E-Mail |
-| Wann & wo | `wann-wo.tsx` | Tages-Tabs mit Zeitleiste und „jetzt“-Markierung, Händler/Restaurants |
-| Der Hof | `der-hof.tsx` | Zeitleiste mit Scroll-Fortschritt, Accordion „Mehr aus dem Hofladen“ |
-| Termine | `termine.tsx` | trennt automatisch kommende und vergangene Termine |
-| Kontakt | `kontakt.tsx` | Anfahrt-Tabs (ÖPNV/Auto) |
+| Seite | Inhalt |
+|---|---|
+| `/` | Hero mit Live-Status, Zahlen, Käse-Auswahl, Wann & wo, Kurzporträt Hof, nächste Termine, Kontakt |
+| `/kaese` | ganzes Sortiment mit Filter und Käseplatten-Anfrage; `?art=frisch\|weich\|gereift\|quark-milch` filtert direkt |
+| `/hof` | Geschichte, Zeitleiste, Auszeichnungen mit Urkunden (PDF), Naturpark-Partner, „Mehr aus dem Hofladen“ |
+| `/termine` | kommende Termine; sind keine eingetragen, der Rückblick des Jahres |
+| `/impressum`, `/datenschutz` | Rechtliches |
+
+Kopfzeile und Footer kommen aus `src/app/layout.tsx`, die Abschnitte liegen in `src/components/site/`.
+Kurzfassungen für die Startseite steuern die Props `kurz` (`HofIntro`, `Termine`) bzw. `kaese-auswahl.tsx`.
 
 shadcn-Komponenten liegen in `src/components/ui` (neu hinzufügen mit `npx shadcn@latest add <name>`).
 

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 
 export function Rechtsseite({ titel, children }: { titel: string; children: React.ReactNode }) {
   return (
-    <main className="papier min-h-screen px-4 py-16 sm:px-6">
+    <main className="papier min-h-screen px-4 pt-32 pb-16 sm:px-6">
       <div className="mx-auto max-w-2xl">
         <Button asChild variant="ghost" size="sm" className="-ml-3">
           <Link href="/">

@@ -90,13 +90,27 @@ export function Kontakt() {
   )
 }
 
+const footerLinks = [
+  { href: "/", label: "Start" },
+  { href: "/kaese", label: "Unser Käse" },
+  { href: "/hof", label: "Der Hof" },
+  { href: "/termine", label: "Termine" },
+]
+
 export function Footer() {
   return (
     <footer className="bg-foreground py-10 text-sm text-background/70">
-      <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-4 px-4 sm:flex-row sm:items-center sm:px-6">
+      <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-6 px-4 sm:flex-row sm:items-center sm:px-6">
         <p>
           © {new Date().getFullYear()} {hof.name}
         </p>
+        <nav aria-label="Seiten" className="flex flex-wrap gap-x-6 gap-y-2">
+          {footerLinks.map((l) => (
+            <Link key={l.href} href={l.href} className="hover:text-background">
+              {l.label}
+            </Link>
+          ))}
+        </nav>
         <nav aria-label="Rechtliches" className="flex gap-6">
           <Link href="/impressum" className="hover:text-background">
             Impressum
