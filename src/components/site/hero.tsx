@@ -1,26 +1,23 @@
 "use client"
 
 import Image from "next/image"
-import { useRef } from "react"
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react"
+import { motion, useReducedMotion } from "motion/react"
 import { ArrowDown, MapPin } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { StatusBadge } from "@/components/site/status-badge"
 import { kaese } from "@/lib/data"
 
 const fotos = [
-  { src: "/images/ziege-mit-zicklein.jpg", alt: "Ziege mit Zicklein auf der Wiese", className: "left-0 top-6 w-[62%] -rotate-3", speed: -40 },
-  { src: "/images/kaeseplatte.jpg", alt: "Käseplatte mit Frischkäse, Camembert und eingelegtem Gemüse", className: "right-0 top-0 w-[56%] rotate-2", speed: 30 },
-  { src: "/images/hof.jpg", alt: "Der Hof mit Stall und Wiese", className: "bottom-0 left-[14%] w-[66%] rotate-1", speed: -15 },
+  { src: "/images/ziege-mit-zicklein.jpg", alt: "Ziege mit Zicklein auf der Wiese", label: "Weide", gross: true },
+  { src: "/images/kaeseplatte.jpg", alt: "Käseplatte mit Frischkäse, Camembert und eingelegtem Gemüse", label: "Käserei" },
+  { src: "/images/hof.jpg", alt: "Der Hof mit Stall und Wiese", label: "Hof" },
 ]
 
 export function Hero() {
-  const ref = useRef<HTMLDivElement>(null)
   const reduce = useReducedMotion()
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] })
 
   return (
-    <section id="top" ref={ref} className="papier relative overflow-hidden pt-28 pb-10 sm:pt-32">
+    <section id="top" className="papier relative overflow-hidden pt-28 pb-10 sm:pt-32">
       <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-[1.05fr_1fr]">
         <div>
           <motion.p
@@ -66,9 +63,9 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="relative mx-auto aspect-[5/4] w-full max-w-xl">
+        <div className="mx-auto grid w-full max-w-xl grid-cols-2 gap-3 sm:gap-4">
           {fotos.map((f, i) => (
-            <Foto key={f.src} {...f} index={i} progress={scrollYProgress} reduce={!!reduce} />
+            <Foto key={f.src} {...f} index={i} reduce={!!reduce} />
           ))}
         </div>
       </div>
@@ -89,28 +86,30 @@ export function Hero() {
 function Foto({
   src,
   alt,
-  className,
-  speed,
+  label,
+  gross,
   index,
-  progress,
   reduce,
-}: (typeof fotos)[number] & {
-  index: number
-  progress: ReturnType<typeof useScroll>["scrollYProgress"]
-  reduce: boolean
-}) {
-  const y = useTransform(progress, [0, 1], [0, reduce ? 0 : speed * 3])
+}: (typeof fotos)[number] & { index: number; reduce: boolean }) {
   return (
-    <motion.div
-      style={{ y }}
-      initial={reduce ? false : { opacity: 0, scale: 0.92 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.8, delay: 0.2 + index * 0.12, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={reduce ? undefined : { scale: 1.03, rotate: 0, zIndex: 10 }}
-      className={`absolute overflow-hidden rounded-2xl border-[6px] border-card bg-card shadow-xl ${className}`}
+    <motion.figure
+      initial={reduce ? false : { opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7, delay: 0.2 + index * 0.12, ease: [0.22, 1, 0.36, 1] }}
+      className={`group relative aspect-[2/1] overflow-hidden rounded-2xl bg-muted shadow-lg ${gross ? "col-span-2" : ""}`}
     >
-      <Image src={src} alt={alt} width={500} height={250} priority={index === 0} className="h-auto w-full" />
-    </motion.div>
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        priority={index === 0}
+        sizes={gross ? "(min-width: 1024px) 576px, 100vw" : "(min-width: 1024px) 288px, 50vw"}
+        className="object-cover transition-transform duration-700 group-hover:scale-105 motion-reduce:transition-none"
+      />
+      <figcaption className="absolute bottom-2.5 left-2.5 rounded-full bg-background/90 px-3 py-1 text-xs font-medium backdrop-blur sm:bottom-3 sm:left-3">
+        {label}
+      </figcaption>
+    </motion.figure>
   )
 }
 
