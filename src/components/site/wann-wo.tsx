@@ -70,7 +70,7 @@ export function WannWo() {
                     {/* Tagesleiste */}
                     <div className="border-b px-6 pt-8 pb-6">
                       <div className="relative h-14 rounded-xl bg-muted">
-                        <Segment von={markt.von} bis={markt.bis} className="bg-wiese" label={`Markt ${markt.stadt}`} />
+                        <Segment von={markt.von} bis={markt.bis} className="bg-himmel" label={`Markt ${markt.stadt}`} />
                         <Segment von={z.von} bis={z.bis} className="bg-primary text-primary-foreground" label="Hofladen" />
                         {istHeute && jetztMin !== null && jetztMin >= START && jetztMin <= ENDE && (
                           <div

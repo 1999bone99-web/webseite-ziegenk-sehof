@@ -116,12 +116,12 @@ function Foto({
 function Laufband() {
   const namen = kaese.map((k) => k.name)
   return (
-    <div className="group relative mt-14 overflow-hidden border-y bg-primary py-3 text-primary-foreground" aria-hidden>
+    <div className="group relative mt-14 overflow-hidden border-t-[6px] border-terra bg-primary py-3 text-primary-foreground" aria-hidden>
       <div className="flex w-max animate-[laufen_60s_linear_infinite] gap-8 group-hover:[animation-play-state:paused] motion-reduce:animate-none">
         {[...namen, ...namen].map((n, i) => (
           <span key={i} className="flex items-center gap-8 font-serif text-lg whitespace-nowrap italic">
             {n}
-            <span className="text-wiese not-italic">✦</span>
+            <span className="text-himmel not-italic">✦</span>
           </span>
         ))}
       </div>

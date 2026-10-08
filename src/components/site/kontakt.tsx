@@ -11,10 +11,10 @@ const kartenSuche = encodeURIComponent("Nußlocher Ziegenkäsehof, Nußloch")
 
 export function Kontakt() {
   return (
-    <section id="kontakt" className="bg-primary py-24 text-primary-foreground sm:py-32">
+    <section id="kontakt" className="border-t-[6px] border-terra bg-primary py-24 text-primary-foreground sm:py-32">
       <div className="mx-auto grid max-w-6xl gap-14 px-4 sm:px-6 lg:grid-cols-2">
         <Reveal>
-          <p className="mb-3 text-sm font-medium tracking-widest text-wiese uppercase">Kontakt & Anfahrt</p>
+          <p className="mb-3 text-sm font-medium tracking-widest text-himmel uppercase">Kontakt & Anfahrt</p>
           <h2 className="text-4xl font-medium tracking-tight text-balance sm:text-5xl">Rufen Sie an oder kommen Sie vorbei</h2>
 
           <dl className="mt-10 space-y-5 text-lg">
@@ -30,13 +30,13 @@ export function Kontakt() {
             </div>
             <div className="flex flex-col gap-2">
               <a href={hof.telefonHref} className="flex items-center gap-3 underline-offset-4 hover:underline">
-                <Phone className="size-5 text-wiese" /> {hof.telefon}
+                <Phone className="size-5 text-himmel" /> {hof.telefon}
               </a>
               <span className="flex items-center gap-3 text-primary-foreground/80">
-                <Printer className="size-5 text-wiese" /> Fax {hof.fax}
+                <Printer className="size-5 text-himmel" /> Fax {hof.fax}
               </span>
               <a href={`mailto:${hof.email}`} className="flex items-center gap-3 underline-offset-4 hover:underline">
-                <Mail className="size-5 text-wiese" /> {hof.email}
+                <Mail className="size-5 text-himmel" /> {hof.email}
               </a>
             </div>
           </dl>
