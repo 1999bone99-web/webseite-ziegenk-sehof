@@ -8,9 +8,9 @@ import { StatusBadge } from "@/components/site/status-badge"
 import { kaese } from "@/lib/data"
 
 const fotos = [
-  { src: "/images/ziege-mit-zicklein.jpg", alt: "Ziege mit Zicklein auf der Wiese", label: "Weide", gross: true },
-  { src: "/images/kaeseplatte.jpg", alt: "Käseplatte mit Frischkäse, Camembert und eingelegtem Gemüse", label: "Käserei" },
-  { src: "/images/hof.jpg", alt: "Der Hof mit Stall und Wiese", label: "Hof" },
+  { src: "/images/ziege-mit-zicklein.jpg", alt: "Ziege mit Zicklein auf der Wiese", gross: true },
+  { src: "/images/kaeseplatte.jpg", alt: "Käseplatte mit Frischkäse, Camembert und eingelegtem Gemüse" },
+  { src: "/images/hof.jpg", alt: "Der Hof mit Stall und Wiese" },
 ]
 
 export function Hero() {
@@ -86,7 +86,6 @@ export function Hero() {
 function Foto({
   src,
   alt,
-  label,
   gross,
   index,
   reduce,
@@ -106,9 +105,6 @@ function Foto({
         sizes={gross ? "(min-width: 1024px) 576px, 100vw" : "(min-width: 1024px) 288px, 50vw"}
         className="object-cover transition-transform duration-700 group-hover:scale-105 motion-reduce:transition-none"
       />
-      <figcaption className="absolute bottom-2.5 left-2.5 rounded-full bg-background/90 px-3 py-1 text-xs font-medium backdrop-blur sm:bottom-3 sm:left-3">
-        {label}
-      </figcaption>
     </motion.figure>
   )
 }
